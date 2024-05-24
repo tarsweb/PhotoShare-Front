@@ -123,7 +123,7 @@
           </template>
           <template v-slot:footer="{ pageCount, prevPage, nextPage, setPage }">
             <!-- <div class="mt-10"> -->
-            <v-pagination
+            <v-pagination v-if="photos?.length"
               :length="pageCount"
               :total-visible="5"
               rounded="circle"

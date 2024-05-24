@@ -12,6 +12,7 @@ import { fileURLToPath, URL } from "node:url";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const { PORT = 3000, BACKEND_URL = "" } = loadEnv(mode, process.cwd(), "");
+  console.log("PORT", PORT, "BACKEND_URL", BACKEND_URL);
   return {
     plugins: [
       VueRouter(),
@@ -45,7 +46,7 @@ export default defineConfig(({ mode }) => {
       extensions: [".js", ".json", ".jsx", ".mjs", ".ts", ".tsx", ".vue"],
     },
     server: {
-      // port: PORT,
+      //port: PORT,
       proxy: {
         "/api": {
           target: BACKEND_URL,

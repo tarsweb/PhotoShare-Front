@@ -46,13 +46,17 @@ export default defineConfig(({ mode }) => {
       extensions: [".js", ".json", ".jsx", ".mjs", ".ts", ".tsx", ".vue"],
     },
     server: {
-      // port: PORT,
+      port: PORT,
       proxy: {
         "/api": {
           target: BACKEND_URL,
           changeOrigin: true,
-          secure: false,
-          ws: true,
+          // secure: false,
+          // ws: true,
+          // rewrite: (path) => path.replace(/^\/api/, ""),
+          // configure: (proxy, options) => {
+          //   // proxy will be an instance of 'http-proxy'
+          // },
         },
       },
     },

@@ -46,7 +46,8 @@ export default defineConfig(({ mode }) => {
       extensions: [".js", ".json", ".jsx", ".mjs", ".ts", ".tsx", ".vue"],
     },
     server: {
-      port: PORT,
+      cors: false
+      //port: PORT,
       proxy: {
         "/api": {
           target: BACKEND_URL,

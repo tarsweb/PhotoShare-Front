@@ -2,15 +2,6 @@
   <v-container class="fill-height">
     <v-responsive class="align-center text-center fill-height">
       <v-sheet v-if="!isLoading" class="align-center">
-        <!-- <v-row align="center" justify="center" dense>
-          <v-col cols="1" md="3">
-            <v-card v-for="photo in photos" :key="photo.id">
-              <v-img :src="photo.secure_url" height="200px"></v-img>
-              <v-card-title>{{ photo.title }}</v-card-title>
-            </v-card>
-          </v-col>
-        </v-row> -->
-
         <v-data-iterator :items="photos" :items-per-page="6">
           <template v-slot:default="{ items }">
             <v-row>
@@ -27,7 +18,7 @@
                     :title="item.raw.title"
                     v-bind:="props"
                   >
-                    <template v-slot:append>
+                    <template v-if="item.raw.owner?.avatar" v-slot:append>
                       <v-avatar size="32">
                         <v-img
                           v-if="item.raw.owner.avatar"
@@ -35,7 +26,7 @@
                           :src="item.raw.owner.avatar"
                         ></v-img>
                         <span v-else class="text-h5">{{
-                          item.raw.user?.username
+                          item.raw.owner?.username
                         }}</span>
                       </v-avatar>
                     </template>
@@ -56,34 +47,7 @@
                         height="300px"
                       ></v-img>
                       <v-expand-transition>
-                        <!-- <v-card
-                          v-show="show"
-                          class="position-absolute w-100"
-                          height="100%"
-                          style="bottom: 0"
-                        >
-                          <v-card-text class="pb-0">
-                            <p class="text-h4">Origin</p>
-
-                            <p class="text-medium-emphasis">
-                              late 16th century (as a noun denoting a place where
-                              alms were distributed): from medieval Latin
-                              eleemosynarius, from late Latin eleemosyna ‘alms’,
-                              from Greek eleēmosunē ‘compassion’
-
-                              {{ item.raw.description }}
-                            </p>
-                          </v-card-text>
-
-                          <v-card-actions class="pt-0">
-                            <v-btn
-                              color="teal-accent-4"
-                              text="Close"
-                              variant="text"
-                              @click="show = false"
-                            ></v-btn>
-                          </v-card-actions>
-                        </v-card> -->
+                        
                       </v-expand-transition>
                     </v-card-item>
 
@@ -109,13 +73,10 @@
                         </div>
                       </div>
                     </v-card-text>
+                   
 
-                    <!-- <v-spacer></v-spacer> -->
-
-                    <v-card-actions>
-                      <!-- <v-spacer></v-spacer> -->
-
-                      <v-btn
+                    <!-- <v-card-actions> -->
+                      <!-- <v-btn
                         color="medium-emphasis"
                         icon="mdi-heart"
                         size="small"
@@ -133,15 +94,16 @@
                         size="small"
                       ></v-btn>
 
-                      <v-spacer></v-spacer>
+                      <v-spacer></v-spacer> -->
 
                       <!-- <v-btn color="orange-lighten-2" text="Explore"></v-btn> -->
 
-                      <v-btn
+                      <!-- <v-btn
                         :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
                         @click="show = !show"
-                      ></v-btn>
-                    </v-card-actions>
+                      ></v-btn> -->
+                    <!-- </v-card-actions> -->
+                    
                     <v-overlay
                       :model-value="isHovering"
                       class="align-center justify-center"
@@ -191,13 +153,4 @@ const router = useRouter();
 
 const show = ref(false);
 
-const openPhoto = (id) => {
-  console.log(id);
-  router.push({ name: "PhotoDetail", params: { photo_id: id } });
-};
-
-const onFocus = () => {
-  console.log("focus");
-  show.value = true;
-};
 </script>

@@ -93,8 +93,9 @@ const { isLoading, error } = useCurentUser();
 
 const form = ref(false);
 
-const formData = ref({ username: "Test", email: "user@example.com", password: "testpass" });
-// const formData = ref({ username: "", email: "", password: "" });
+// for test
+// const formData = ref({ username: "Test", email: "user@example.com", password: "testpass" });
+const formData = ref({ username: "", email: "", password: "" });
 
 const isError = ref(false);
 

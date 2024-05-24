@@ -46,7 +46,7 @@ export default defineConfig(({ mode }) => {
       extensions: [".js", ".json", ".jsx", ".mjs", ".ts", ".tsx", ".vue"],
     },
     server: {
-      cors: false
+      cors: false,
       //port: PORT,
       proxy: {
         "/api": {

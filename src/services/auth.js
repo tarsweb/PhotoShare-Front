@@ -2,7 +2,7 @@ import axios from "axios";
 import cookies from "vue-cookies";
 
 const instance = axios.create({
-  baseURL: "api",
+  baseURL: "/api",
 });
 
 const prefix = "/auth";

@@ -46,9 +46,7 @@
                         width="250px"
                         height="300px"
                       ></v-img>
-                      <v-expand-transition>
-                        
-                      </v-expand-transition>
+                      <v-expand-transition> </v-expand-transition>
                     </v-card-item>
 
                     <v-card-text>
@@ -73,10 +71,9 @@
                         </div>
                       </div>
                     </v-card-text>
-                   
 
                     <!-- <v-card-actions> -->
-                      <!-- <v-btn
+                    <!-- <v-btn
                         color="medium-emphasis"
                         icon="mdi-heart"
                         size="small"
@@ -96,14 +93,14 @@
 
                       <v-spacer></v-spacer> -->
 
-                      <!-- <v-btn color="orange-lighten-2" text="Explore"></v-btn> -->
+                    <!-- <v-btn color="orange-lighten-2" text="Explore"></v-btn> -->
 
-                      <!-- <v-btn
+                    <!-- <v-btn
                         :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
                         @click="show = !show"
                       ></v-btn> -->
                     <!-- </v-card-actions> -->
-                    
+
                     <v-overlay
                       :model-value="isHovering"
                       class="align-center justify-center"
@@ -114,7 +111,9 @@
                           <p class="text-h4">{{ item.raw.description }}</p>
                         </v-card-text>
                       </v-card>
-                      <v-btn variant="flat" @click="owerlay = true">See more info</v-btn>
+                      <v-btn variant="flat"
+                        >See more info</v-btn
+                      >
                     </v-overlay>
                   </v-card>
                 </v-hover>
@@ -123,14 +122,15 @@
           </template>
           <template v-slot:footer="{ pageCount, prevPage, nextPage, setPage }">
             <!-- <div class="mt-10"> -->
-            <v-pagination v-if="photos?.length"
-              :length="pageCount"
-              :total-visible="5"
-              rounded="circle"
-              @update:model-value="setPage"
-              @prev="prevPage"
-              @next="nextPage"
-            ></v-pagination>
+              <v-pagination
+                v-if="photos?.length && pageCount > 1"
+                :length="pageCount"
+                :total-visible="5"
+                rounded="circle"
+                @update:model-value="setPage"
+                @prev="prevPage"
+                @next="nextPage"
+              ></v-pagination>
             <!-- </div> -->
           </template>
         </v-data-iterator>
@@ -146,11 +146,10 @@ import { useRouter } from "vue-router";
 const props = defineProps({
   isLoading: Boolean,
   photos: Array,
-  owerlay: Boolean
+  owerlay: Boolean,
 });
 
 const router = useRouter();
 
 const show = ref(false);
-
 </script>

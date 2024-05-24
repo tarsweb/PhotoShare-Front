@@ -45,12 +45,11 @@ export default defineConfig(({ mode }) => {
       },
       extensions: [".js", ".json", ".jsx", ".mjs", ".ts", ".tsx", ".vue"],
     },
-    server: {
-      //port: PORT,
+    se0rver: {
+      port: PORT,
       proxy: {
         "/api": {
           target: BACKEND_URL,
-          // target: "https://rest-api-kbuhantsev-ca83d110.koyeb.app",
           changeOrigin: true,
           secure: false,
           ws: true,

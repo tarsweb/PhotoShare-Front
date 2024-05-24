@@ -2,7 +2,8 @@ import axios from "axios";
 import cookies from "vue-cookies";
 
 const instance = axios.create({
-  baseURL: "/api",
+  //baseURL: "/api",
+  baseURL: "https://rest-api-kbuhantsev-ca83d110.koyeb.app/api"
 });
 
 const prefix = "/auth";

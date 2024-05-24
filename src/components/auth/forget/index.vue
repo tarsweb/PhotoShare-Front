@@ -125,12 +125,12 @@ const formForgotPassword = ref(false);
 const formResetPassword = ref(false);
 
 //for Test
-const formData = ref({
-  login: "user@example.com",
-});
 // const formData = ref({
-//   login: "",
+//   login: "user@example.com",
 // });
+const formData = ref({
+  login: "",
+});
 
 const formDataNewPassword = ref({
   reset_token: "",

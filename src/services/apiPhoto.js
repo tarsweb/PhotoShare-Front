@@ -3,7 +3,9 @@ import instance from "./auth";
 const prefix = "/photos";
 
 async function getPhotos() {
-  const { data } = await instance.get(`${prefix}/`);
+  const {
+    data: { data },
+  } = await instance.get(`${prefix}/`);
   return data;
 }
 

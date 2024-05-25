@@ -106,7 +106,7 @@ const onSubmit = async () => {
     //send backend
     signUp(getFormData())
       .then(() => {
-        router.push({ name: "Home" });
+        router.push({ name: "Login" });
       })
       .catch((e) => {
         isError.value = true;

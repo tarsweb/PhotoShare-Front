@@ -9,7 +9,7 @@
           variant="text"
         />
         <h1>Add New Photo</h1>
-        <v-card flat class="mx-auto px-6 py-8">
+        <v-card flat class="mx-auto px-6 py-8" width="500">
           <v-form v-model="form" @submit.prevent="onSubmit">
             <v-text-field
               v-model="formData.title"

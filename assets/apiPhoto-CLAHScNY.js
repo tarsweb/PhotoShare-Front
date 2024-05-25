@@ -1,1 +1,0 @@
-import{bh as a}from"./index-D-6sbc1S.js";const o="/photos";async function c(){const{data:{data:t}}=await a.get(`${o}/`);return t}async function e(t){const{data:n}=await a.post(`${o}/`,t);return n}export{e as c,c as g};

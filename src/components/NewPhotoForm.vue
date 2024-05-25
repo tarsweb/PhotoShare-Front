@@ -75,7 +75,7 @@
             @update:model-value="onFileChange"
             required
           />
-          <v-select
+          <!-- <v-select
             v-model="formData.tags"
             :items="tags"
             :readonly="isLoading"
@@ -85,6 +85,15 @@
             multiple
             chips
             density="comfortable"
+          /> -->
+          <v-text-field 
+          v-model="formData.tags"
+          :readonly="isLoading"
+          label="Tags"
+          placeholder="Enter tags"
+          :clearable="!isLoading"
+          variant="outlined"
+          prepend-inner-icon="mdi-tag"
           />
           <v-btn
             :disabled="!form"
@@ -116,7 +125,7 @@ const formData = ref({
   title: "",
   description: "",
   file: null,
-  tags: [],
+  tags: "",
 });
 
 const isLoading = ref(false);
@@ -167,12 +176,11 @@ const onSubmit = async (event) => {
 };
 
 const getDataForPhoto = () => {
-  console.log("getDataPhoto");
-
   const res = new FormData();
   res.append("title", formData.value.title);
   res.append("description", formData.value.description);
   res.append("file", formData.value.file);
+  if (formData.value.tags.length) res.append("tags", formData.value.tags);
   // res.append("tags", ["test"]);
 
   return res;

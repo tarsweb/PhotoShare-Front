@@ -133,5 +133,4 @@ const onFileChange = async (file) => {
     userProfile.value = response;
   });
 };
-
 </script>

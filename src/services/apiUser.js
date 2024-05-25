@@ -66,6 +66,15 @@ async function udatedAvatar(file) {
   }
 }
 
+async function resetPassword(dataForResetPassword) {
+  try {
+    const {data} = await instance.patch(`${prefix}/reset_password`, dataForResetPassword);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export {
   getCurrentUser,
   getAllUsers,
@@ -73,4 +82,5 @@ export {
   getUserComments,
   blockUser,
   udatedAvatar,
+  resetPassword,
 };

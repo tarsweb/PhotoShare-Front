@@ -1,13 +1,19 @@
 <template>
   <v-container class="fill-height">
     <v-responsive class="align-center text-center fill-height">
-      <v-toolbar v-if="isAuth">
-        <v-spacer></v-spacer>
-        <v-btn type="button" @click="overlay = !overlay" prependIcon="mdi-plus"> Add photo</v-btn>
-      </v-toolbar>
-      <router-view />
       <h1>Photos</h1>
-      <PhotosList :photos="photos" :isLoading="isLoading" :owerlay="overlay" />
+      <PhotosList :photos="photos" :isLoading="isLoading" />
+      <v-fab v-if="isAuth"
+        extended
+        prepend-icon="mdi-plus"
+        text="Add photo"
+        variant="tonal"
+        color="success"
+        app
+        absolute
+        @click="overlay = !overlay"
+      >
+      </v-fab>
     </v-responsive>
   </v-container>
   <v-overlay v-model="overlay" scrim="black">
@@ -22,7 +28,6 @@ import { getPhotos } from "@/services/apiPhoto";
 import PhotosList from "@/components/PhotosList.vue";
 import NewPhotoForm from "@/components/NewPhotoForm.vue";
 
-
 const { isAuth } = useCurrentUser();
 
 const isLoading = ref(false);
@@ -32,9 +37,8 @@ const photos = ref([]);
 const overlay = ref(false);
 
 const getDataPhotos = async () => {
-  const res = await getPhotos();
-  photos.value = res.data;
-  console.log(res.data);
+  const dataPhotos = await getPhotos();
+  photos.value = dataPhotos;
 };
 
 watchEffect(async () => {

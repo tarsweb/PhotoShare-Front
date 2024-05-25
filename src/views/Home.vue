@@ -11,13 +11,13 @@
         color="success"
         app
         absolute
-        @click="overlay = !overlay"
+        @click="overlay = true"
       >
       </v-fab>
     </v-responsive>
   </v-container>
   <v-overlay v-model="overlay" scrim="black">
-    <NewPhotoForm />
+    <NewPhotoForm @close="overlay = false" />
   </v-overlay>
 </template>
 

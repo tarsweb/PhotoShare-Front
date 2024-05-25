@@ -12,7 +12,6 @@ import { fileURLToPath, URL } from "node:url";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const { PORT = 3000, BACKEND_URL = "" } = loadEnv(mode, process.cwd(), "");
-  console.log("PORT", PORT, "BACKEND_URL", BACKEND_URL);
   return {
     plugins: [
       VueRouter(),

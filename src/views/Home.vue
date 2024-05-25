@@ -44,6 +44,8 @@ const getDataPhotos = async () => {
 watchEffect(async () => {
   isLoading.value = true;
 
+  console.log("Home", overlay.value);
+
   getDataPhotos();
 
   isLoading.value = false;

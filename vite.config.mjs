@@ -54,7 +54,7 @@ export default defineConfig(({ mode }) => {
           ws: true,
         },
       },
-      base: '/PhotoShare-Front/'
     },
+    base: '/PhotoShare-Front/'
   };
 });

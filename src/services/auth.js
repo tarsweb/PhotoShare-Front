@@ -2,7 +2,6 @@ import axios from "axios";
 import cookies from "vue-cookies";
 
 const instance = axios.create({
-  // baseURL: "api",
   baseURL: "http://localhost:8000/api"
 });
 

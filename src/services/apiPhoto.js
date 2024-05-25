@@ -3,28 +3,25 @@ import instance from "./auth";
 const prefix = "/photos";
 
 async function getPhotos() {
-    const { data } = await instance.get(`${prefix}/`);
-    return data;
+  const { data } = await instance.get(`${prefix}/`);
+  return data;
 }
 
-async function getPhoto(photo_id){
-    console.log(photo_id);
-    // const { data } = await instance.get(`${prefix}/${photo_id}`);
-    const result = await instance.get(`${prefix}/`);
-    console.log(data);
-    return data;
+async function getPhoto(id) {
+  const {
+    data: { data },
+  } = await instance.get(`${prefix}/${id}`);
+  return data;
 }
 
 async function deletePhoto(id) {
-    const { data } = await instance.delete(`${prefix}/${id}`);
-    return data;
+  const { data } = await instance.delete(`${prefix}/${id}`);
+  return data;
 }
 
-async function createPhoto(data) {
-    const res = await instance.post(`${prefix}/`, data);
-    console.log(res);
-    const photo = res.data;
-    return photo;
+async function createPhoto(dataContent) {
+  const { data } = await instance.post(`${prefix}/`, dataContent);
+  return data;
 }
 
-export { getPhotos, getPhoto, deletePhoto, createPhoto }
+export { getPhotos, getPhoto, createPhoto, deletePhoto };

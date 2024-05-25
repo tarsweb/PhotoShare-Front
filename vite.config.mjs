@@ -48,13 +48,13 @@ export default defineConfig(({ mode }) => {
       port: PORT,
       proxy: {
         "/api": {
-          // target: BACKEND_URL,
-          target: "https://rest-api-kbuhantsev-ca83d110.koyeb.app",
+          target: BACKEND_URL,
           changeOrigin: true,
           secure: false,
           ws: true,
         },
       },
+      base: "/PhotoShape-front/",
     },
   };
 });

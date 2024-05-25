@@ -25,13 +25,13 @@
                           :alt="item.raw.owner.username"
                           :src="item.raw.owner.avatar"
                         ></v-img>
-                        <span v-else class="text-h5">{{
+                        <span v-else class="mt-1">{{
                           item.raw.owner?.username
                         }}</span>
                       </v-avatar>
                     </template>
 
-                    <v-card-text>
+                    <v-card-text v-if="item.raw.tags.length">
                       <div class="px-4 mb-2">
                         <v-chip v-for="tag in item.raw.tags" :key="tag.id">
                           {{ tag.name }}
@@ -46,7 +46,6 @@
                         width="250px"
                         height="300px"
                       ></v-img>
-                      <v-expand-transition> </v-expand-transition>
                     </v-card-item>
 
                     <v-card-text>
@@ -72,7 +71,11 @@
                       </div>
                     </v-card-text>
 
+                    <!-- <v-spacer></v-spacer> -->
+
                     <!-- <v-card-actions> -->
+                    <!-- <v-spacer></v-spacer> -->
+
                     <!-- <v-btn
                         color="medium-emphasis"
                         icon="mdi-heart"
@@ -89,9 +92,9 @@
                         color="medium-emphasis"
                         icon="mdi-share-variant"
                         size="small"
-                      ></v-btn>
+                      ></v-btn> -->
 
-                      <v-spacer></v-spacer> -->
+                    <!-- <v-spacer></v-spacer> -->
 
                     <!-- <v-btn color="orange-lighten-2" text="Explore"></v-btn> -->
 
@@ -100,7 +103,6 @@
                         @click="show = !show"
                       ></v-btn> -->
                     <!-- </v-card-actions> -->
-
                     <v-overlay
                       :model-value="isHovering"
                       class="align-center justify-center"
@@ -111,7 +113,7 @@
                           <p class="text-h4">{{ item.raw.description }}</p>
                         </v-card-text>
                       </v-card>
-                      <v-btn variant="flat"
+                      <v-btn variant="outlined" >
                         >See more info</v-btn
                       >
                     </v-overlay>
@@ -122,15 +124,15 @@
           </template>
           <template v-slot:footer="{ pageCount, prevPage, nextPage, setPage }">
             <!-- <div class="mt-10"> -->
-              <v-pagination
-                v-if="photos?.length && pageCount > 1"
-                :length="pageCount"
-                :total-visible="5"
-                rounded="circle"
-                @update:model-value="setPage"
-                @prev="prevPage"
-                @next="nextPage"
-              ></v-pagination>
+            <v-pagination
+              v-if="photos?.length && pageCount > 1"
+              :length="pageCount"
+              :total-visible="5"
+              rounded="circle"
+              @update:model-value="setPage"
+              @prev="prevPage"
+              @next="nextPage"
+            ></v-pagination>
             <!-- </div> -->
           </template>
         </v-data-iterator>
@@ -146,10 +148,13 @@ import { useRouter } from "vue-router";
 const props = defineProps({
   isLoading: Boolean,
   photos: Array,
-  owerlay: Boolean,
+  // owerlay: Boolean
 });
 
 const router = useRouter();
 
-const show = ref(false);
+const openPhoto = (id) => {
+  console.log(id);
+  router.push({ name: "PhotoDetail", params: { photo_id: id } });
+};
 </script>

@@ -43,7 +43,7 @@ async function getUserComments() {
   }
 }
 
-async function blockUser({email, blocked}) {
+async function blockUser({ email, blocked }) {
   try {
     const data = new FormData();
     data.append("blocked_user", email);
@@ -55,4 +55,22 @@ async function blockUser({email, blocked}) {
   }
 }
 
-export { getCurrentUser, getAllUsers, getUserPhotos, getUserComments, blockUser };
+async function udatedAvatar(file) {
+  try {
+    const dataForUpdate = new FormData();
+    dataForUpdate.append("file", file);
+    const { data : { data } } = await instance.patch(`${prefix}/avatar`, dataForUpdate);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export {
+  getCurrentUser,
+  getAllUsers,
+  getUserPhotos,
+  getUserComments,
+  blockUser,
+  udatedAvatar,
+};

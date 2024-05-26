@@ -3,17 +3,19 @@
     <v-responsive class="align-center text-center fill-height">
       <h1>Photos</h1>
       <PhotosList :photos="photos" :isLoading="isLoading" />
-      <v-fab v-if="isAuth"
-        extended
-        prepend-icon="mdi-plus"
-        text="Add photo"
-        variant="tonal"
-        color="success"
-        app
-        absolute
-        @click="overlay = true"
-      >
-      </v-fab>
+      <teleport v-if="isAuth" to="#app">
+        <v-fab
+          extended
+          prepend-icon="mdi-plus"
+          text="Add photo"
+          variant="tonal"
+          color="success"
+          app
+          style="position: sticky; bottom: 20px; right: 20px;"
+          @click="overlay = true"
+        >
+        </v-fab>
+    </teleport>
     </v-responsive>
   </v-container>
   <v-overlay v-model="overlay" scrim="black">

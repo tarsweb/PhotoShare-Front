@@ -1,12 +1,12 @@
 <template>
-    <PhotoDetail :photo="photo" :isLoading="isLoading" />
+  <PhotoDetail :photo="photo" />
 </template>
 
 <script setup>
-import { ref, watchEffect } from "vue";
-import { useRoute } from 'vue-router';
+import { onMounted, ref, watch, watchEffect } from "vue";
+import { useRoute } from "vue-router";
 import useCurrentUser from "@/composables/useCurrentUser";
-import { getPhotos } from "@/services/apiPhoto";
+import { getPhoto } from "@/services/apiPhoto";
 
 const { user } = useCurrentUser();
 
@@ -18,20 +18,24 @@ const id = route.params.photo_id;
 
 const isLoading = ref(false);
 
-const photo = ref(null);
+const photo = ref({});
 
-const getDataPhoto = async (id) => {
-  const res = await getPhotos();
-  photo.value = res.data;
-  console.log(res.data);
-};
+// const getDataPhoto = async (id) => {
+//   const imageData = await getPhoto(id);
+//   photo.value = imageData;
+// };
 
-watchEffect(async () => {
-  isLoading.value = true;
+watchEffect( async () => {
+  
+  // isLoading.value = true;
 
-  getDataPhoto(id);
+  getPhoto(id).then((imageData) => {
+    photo.value = imageData;
+    // isLoading.value = false;
 
-  isLoading.value = false;
+    console.log("PhotoDetail", photo.value);
+  });
+
+  // isLoading.value = false;
 });
-
 </script>

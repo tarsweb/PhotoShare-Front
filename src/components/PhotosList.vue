@@ -113,8 +113,8 @@
                           <p class="text-h4">{{ item.raw.description }}</p>
                         </v-card-text>
                       </v-card>
-                      <v-btn variant="outlined" >
-                        >See more info</v-btn
+                      <v-btn variant="outlined" @click="openPhoto(item.raw.id)">
+                        See more info</v-btn
                       >
                     </v-overlay>
                   </v-card>

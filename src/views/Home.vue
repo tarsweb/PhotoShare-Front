@@ -11,14 +11,18 @@
           variant="tonal"
           color="success"
           app
-          style="position: sticky; bottom: 20px; right: 20px;"
+          style="position: sticky; bottom: 20px; right: 20px"
           @click="overlay = true"
         >
         </v-fab>
-    </teleport>
+      </teleport>
     </v-responsive>
   </v-container>
-  <v-overlay v-model="overlay" scrim="black">
+  <v-overlay
+    v-model="overlay"
+    scrim="black"
+    style="overflow-y: auto !important"
+  >
     <NewPhotoForm @close="overlay = false" />
   </v-overlay>
 </template>

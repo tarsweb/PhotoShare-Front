@@ -25,7 +25,7 @@
                 <v-card
                   lg="4"
                   :elevation="14"
-                  :color="item.raw.blocked ? 'red' : 'green'"
+                  
                   :title="item.raw.username"
                   :prepend-avatar="item.raw.avatar"
                 >
@@ -83,6 +83,7 @@
                     <v-spacer></v-spacer>
                     <v-btn
                       :icon="item.raw.blocked ? 'mdi-lock' : 'mdi-lock-open'"
+                      :color="item.raw.blocked ? 'error' : 'success'"
                       @click="
                         oClickBlockUser(item.raw.email, !item.raw.blocked)
                       "

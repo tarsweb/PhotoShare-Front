@@ -76,7 +76,7 @@
               @update:model-value="onFileChange"
               required
             />
-            <!-- <v-select
+            <v-select
             v-model="formData.tags"
             :items="tags"
             :readonly="isLoading"
@@ -85,8 +85,10 @@
             label="Tags"
             multiple
             chips
+            clearable
             density="comfortable"
-          /> -->
+            prepend-inner-icon="mdi-tag"
+          />
             <v-text-field
               v-model="formData.tags"
               :readonly="isLoading"
@@ -96,6 +98,18 @@
               variant="outlined"
               prepend-inner-icon="mdi-tag"
             />
+            <v-autocomplete
+              v-model="formData.tags"
+              :items="tags"
+              :readonly="isLoading"
+              item-title="name"
+              item-value="id"
+              label="Tags"
+              multiple
+              chips
+              clearable
+              density="comfortable"
+              prepend-inner-icon="mdi-tag"/>
             <v-btn
               :disabled="!form"
               :loading="isLoading"
@@ -127,7 +141,7 @@ const formData = ref({
   title: "",
   description: "",
   file: null,
-  tags: "",
+  tags: [],
 });
 
 const isLoading = ref(false);
@@ -136,11 +150,11 @@ const tags = ref([]);
 
 const imageUrl = ref(null);
 
-// watchEffect( async () => {
-//   isLoading.value = true;
-//   tags.value = await getTags();
-//   isLoading.value = false;
-// });
+watchEffect( async () => {
+  isLoading.value = true;
+  tags.value = await getTags();
+  isLoading.value = false;
+});
 
 const createImage = (file) => {
   const reader = new FileReader();

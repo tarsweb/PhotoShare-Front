@@ -16,13 +16,18 @@
                 </v-avatar>
               </template>
 
-              
-                <v-card-title>{{ photo?.owner?.username }}</v-card-title>
-              
+              <v-card-title>{{ photo?.owner?.username }}</v-card-title>
+
               <!-- <span>{{ photo?.owner }}</span> -->
             </v-tooltip>
           </template>
-          <v-chip v-for="tag in photo?.tags" :key="tag">{{ tag }}</v-chip>
+          <v-card-text v-if="photo.tags">
+            <div class="px-4 mb-2">
+              <v-chip v-for="tag in photo.tags" :key="tag.id" class="mr-2">
+                {{ tag.name }}
+              </v-chip>
+            </div>
+          </v-card-text>
           <v-card-item>
             <v-img
               :src="photo.secure_url"
@@ -41,18 +46,11 @@
           </v-card-item>
 
           <v-card-actions>
-            <v-btn
-              color="primary"
-              variant="outlined"
-            >
-             Details
-            </v-btn>
-            <v-btn>
-              Make transformation
-            </v-btn>
+            <v-btn color="primary" variant="outlined"> Details </v-btn>
+            <v-btn> Make transformation </v-btn>
           </v-card-actions>
         </v-card>
-       
+
         {{ photo }}
       </v-sheet>
     </v-responsive>

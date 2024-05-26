@@ -4,7 +4,7 @@
       <h1>Photos</h1>
       
       <PhotosList :photos="photos" :isLoading="isLoading" />
-      <teleport v-if="isAuth" to="#app">      
+      <teleport v-if="isAuth" to="#app">
         <v-fab
           extended
           prepend-icon="mdi-plus"

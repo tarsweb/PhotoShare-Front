@@ -114,7 +114,7 @@
                         </v-card-text>
                       </v-card>
                       <v-btn variant="outlined" >
-                        >See more info</v-btn
+                        See more info</v-btn
                       >
                     </v-overlay>
                   </v-card>

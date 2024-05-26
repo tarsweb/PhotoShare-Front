@@ -19,7 +19,11 @@
     </teleport>
     </v-responsive>
   </v-container>
-  <v-overlay v-model="overlay" scrim="black">
+  <v-overlay
+    v-model="overlay"
+    scrim="black"
+    style="overflow-y: auto !important"
+  >
     <NewPhotoForm @close="overlay = false" />
   </v-overlay>
 </template>

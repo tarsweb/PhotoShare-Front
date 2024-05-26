@@ -33,7 +33,7 @@
 
                     <v-card-text v-if="item.raw.tags.length">
                       <div class="px-4 mb-2">
-                        <v-chip v-for="tag in item.raw.tags" :key="tag.id">
+                        <v-chip v-for="tag in item.raw.tags" :key="tag.id" class="mr-2">
                           {{ tag.name }}
                         </v-chip>
                       </div>

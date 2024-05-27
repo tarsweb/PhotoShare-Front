@@ -5,7 +5,7 @@
         <v-btn
           icon="mdi-close"
           @click="$emit('close')"
-          position="absolute top-0 right-0"
+          class="position-absolute top-0 right-0"
           variant="text"
         />
         <h1>Add New Photo</h1>
@@ -58,7 +58,7 @@
                 /> -->
 
                     <!-- <v-progress-circular
-                  
+
                   indeterminate
                   color="grey-lighten-5"
                 /> -->
@@ -77,18 +77,18 @@
               required
             />
             <v-select
-            v-model="formData.tags"
-            :items="tags"
-            :readonly="isLoading"
-            item-title="name"
-            item-value="id"
-            label="Tags"
-            multiple
-            chips
-            clearable
-            density="comfortable"
-            prepend-inner-icon="mdi-tag"
-          />
+              v-model="formData.tags"
+              :items="tags"
+              :readonly="isLoading"
+              item-title="name"
+              item-value="id"
+              label="Tags"
+              multiple
+              chips
+              clearable
+              density="comfortable"
+              prepend-inner-icon="mdi-tag"
+            />
             <v-text-field
               v-model="formData.tags"
               :readonly="isLoading"
@@ -129,9 +129,9 @@
 </template>
 
 <script setup>
-import { ref, watchEffect } from "vue";
-import { createPhoto } from "@/services/apiPhoto";
-import { getTags } from "@/services/apiTag";
+import {ref, watchEffect} from "vue";
+import {createPhoto} from "@/services/apiPhoto";
+import {getTags} from "@/services/apiTag";
 
 const emit = defineEmits(["close"]);
 
@@ -150,7 +150,7 @@ const tags = ref([]);
 
 const imageUrl = ref(null);
 
-watchEffect( async () => {
+watchEffect(async () => {
   isLoading.value = true;
   tags.value = await getTags();
   isLoading.value = false;
@@ -185,7 +185,8 @@ const onSubmit = async (event) => {
       event.target.reset();
       emit("close");
     })
-    .catch((e) => {})
+    .catch((e) => {
+    })
     .finally(() => {
       isLoading.value = false;
     });

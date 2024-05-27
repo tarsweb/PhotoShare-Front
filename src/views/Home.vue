@@ -2,7 +2,7 @@
   <v-container class="fill-height">
     <v-responsive class="align-center text-center fill-height">
       <h1>Photos</h1>
-      
+
       <PhotosList :photos="photos" :isLoading="isLoading" />
       <teleport v-if="isAuth" to="#app">
         <v-fab
@@ -22,9 +22,10 @@
   <v-overlay
     v-model="overlay"
     scrim="black"
-    style="overflow-y: auto !important"
+    style="overflow-y: auto !important;"
+    class="d-flex align-center justify-center"
   >
-    <NewPhotoForm @close="overlay = false" />
+    <NewPhotoForm @close="overlay = false"/>
   </v-overlay>
 </template>
 

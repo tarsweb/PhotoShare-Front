@@ -263,7 +263,7 @@ const rules = {
 
 const onPreview = async () => { 
   createTransformedPhoto(props.photo_id, getTransformData()).then((data) => {
-    console.log(data);
+    console.log("onPreview", data);
     imageUrl.value = data;
     // emit("close");
    }).catch((e) => {
@@ -272,7 +272,12 @@ const onPreview = async () => {
 };
 
 const onSubmit = () => {
-  console.log(formData.value);
+  console.log("onSubmit", imageUrl.value);
+  saveTransformedPhoto(props.photo_id, imageUrl.value).then((data) => {
+    console.log(data);
+    // imageUrl.value = data;
+    emit("close");
+  });
 };
 
 const getTransformData = () => {

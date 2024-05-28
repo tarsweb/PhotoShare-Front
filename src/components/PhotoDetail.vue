@@ -34,6 +34,13 @@
         <v-card-text class="text-h5">
           {{ photo?.description }}
         </v-card-text>
+        <v-rating
+          :model-value="photo?.average_rating"
+          color="amber"
+          density="compact"
+          half-increments
+          readonly
+        ></v-rating>
       </v-card-item>
       <v-card-actions>
         <v-dialog max-width="500" style="">

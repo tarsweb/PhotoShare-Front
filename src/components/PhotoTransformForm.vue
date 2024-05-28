@@ -261,8 +261,9 @@ const rules = {
   zoom: [(v) => !!v || "Zoom is required"],
 };
 
-const onPreview = async () => {
-  createTransformedPhoto(props.photo_id, JSON.stringify(formData.value)).then((data) => {
+const onPreview = async () => { 
+  createTransformedPhoto(props.photo_id, getTransformData()).then((data) => {
+    console.log(data);
     imageUrl.value = data;
     // emit("close");
    }).catch((e) => {
@@ -272,5 +273,12 @@ const onPreview = async () => {
 
 const onSubmit = () => {
   console.log(formData.value);
+};
+
+const getTransformData = () => {
+  return Object.entries(formData.value).reduce(
+    (acc, [k, v]) => (!!v ? ((acc[k] = v), acc) : acc),
+    {}
+  );
 };
 </script>

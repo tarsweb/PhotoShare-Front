@@ -17,6 +17,15 @@
           <v-card-title>{{ photo?.owner?.username }}</v-card-title>
         </v-tooltip>
       </template>
+      <template v-slot:prepend>
+        <v-rating
+        :model-value="avereage_rating"
+        color="amber"
+        density="compact"
+        half-increments
+        readonly
+      />
+      </template>
       <v-card-text v-if="photo?.tags">
         <div class="px-4 mb-2">
           <v-chip v-for="tag in photo?.tags" :key="tag.id" class="mr-2">
@@ -35,41 +44,29 @@
           {{ photo?.description }}
         </v-card-text>
         <v-rating
-          :model-value="photo?.average_rating"
+          v-if="isAuth"
+          v-model="raiting"
           color="amber"
           density="compact"
-          half-increments
-          readonly
+          @update:model-value="onUpdateRaiting"
         ></v-rating>
       </v-card-item>
       <v-card-actions>
-        <v-dialog max-width="500" style="">
+        <v-dialog v-if="user?.id === photo?.owner?.id">
           <template v-slot:activator="{ props: activatorProps }">
             <v-btn
               v-bind="activatorProps"
-              color="surface-variant"
+              variant="outlined"
+              color="green"
               text="Make transformation"
-              variant="flat"
             ></v-btn>
           </template>
 
-          <template v-slot:default="{ isActive }" style="overflow-y: auto !important;">
-            <PhotoTransformForm :photo_id="photo?.id" />
-            <!-- <v-card title="Dialog">
-              <v-card-text>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </v-card-text>
-
-              <v-card-actions>
-                <v-spacer></v-spacer>
-
-                <v-btn
-                  text="Close Dialog"
-                  @click="isActive.value = false"
-                ></v-btn>
-              </v-card-actions>
-            </v-card> -->
+          <template v-slot:default="{ isActive }">
+            <PhotoTransformForm
+              :photo_id="photo?.id"
+              @close="isActive.value = false"
+            />
           </template>
         </v-dialog>
         <!-- <v-btn color="primary" variant="outlined"> Details </v-btn> -->
@@ -82,13 +79,14 @@
 </template>
 
 <script setup>
-import { computed, ref, toRef, watchEffect } from "vue";
+import { computed, onMounted, ref, toRef, watchEffect } from "vue";
 import useCurrentUser from "@/composables/useCurrentUser";
+import { getRating, setRating, getAVGRating } from "@/services/apiRating";
 
 import CommentsSet from "./CommentsSet.vue";
-import PhotoTransformForm from "@/components/PhotoTransformForm.vue"
+import PhotoTransformForm from "@/components/PhotoTransformForm.vue";
 
-const { user } = useCurrentUser();
+const { isAuth, user } = useCurrentUser();
 
 const props = defineProps({
   photo: {
@@ -99,6 +97,8 @@ const props = defineProps({
 });
 
 const photo = toRef(props, "photo");
+const raiting = ref(0);
+const avereage_rating = ref(0);
 
 const isLoading = ref(false);
 
@@ -107,4 +107,36 @@ const isLoading = ref(false);
 //   comments.value = await getComments(photo.id);
 //   isLoading.value = false;
 // });
+
+onMounted(async () => {
+  if (isAuth.value) {
+    getRating(photo.value.id)
+      .then((result) => {
+        raiting.value = result;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  getAVGRating(photo.value.id)
+    .then((result) => {
+      avereage_rating.value = result;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+const onUpdateRaiting = async (value) => {
+  setRating(photo.value.id, value)
+    .then((result) => {
+      getAVGRating(photo.value.id).then((result) => {
+        avereage_rating.value = result;
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 </script>

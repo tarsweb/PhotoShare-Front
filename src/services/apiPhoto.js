@@ -26,4 +26,14 @@ async function createPhoto(dataContent) {
   return data;
 }
 
-export { getPhotos, getPhoto, createPhoto, deletePhoto };
+async function createTransformedPhoto({photo_id, dataTransform}) {
+  const { data } = await instance.post(`${prefix}/trans/${photo_id}`, dataTransform);
+  return data;
+}
+
+async function saveTransformedPhoto({photo_id, url}) {
+  const { data } = await instance.patch(`${prefix}/trans/save${photo_id}`, {url});
+  return data;
+}
+
+export { getPhotos, getPhoto, createPhoto, deletePhoto, createTransformedPhoto, saveTransformedPhoto};

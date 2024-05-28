@@ -1,210 +1,232 @@
 <template>
   <v-container>
     <v-responsive class="align-center text-center fill-height">
-      <h1>Transform</h1>
-      <v-card>
-        
-        <v-card-item class="d-flex flex-column">
-          <v-img
-            :src="imageUrl"
-            width="50px"
-            height="50px"
-            class="mx-auto my-4"
-            lazy-src="https://picsum.photos/id/11/10/6"
-          >
-            <template v-slot:placeholder>
-              <div class="d-flex align-center justify-center fill-height"></div>
-            </template>
-          </v-img>
-        <!-- </v-card-item>
-      
-    <v-card-item> -->
-      <v-form v-model="form" @submit.prevent="onSubmit">
+      <v-sheet v-if="!isLoading" class="align-center rounded" width="100%">
+        <v-snackbar
+          v-model="isError"
+          location="right top"
+          color="error"
+          transition="slide-x-transition"
+          eager
+          vertical
+          :offset="'10000'"
+        >
+          {{ error?.text }}
+          <template v-slot:actions>
+            <v-btn variant="text" @click="isError = false"> Close </v-btn>
+          </template>
+        </v-snackbar>
         <v-btn
-            type="button"
-            :disabled="!form"
-            :loading="isLoading"
-            block
-            color="success"
-            size="large"
-            prepend-icon="mdi-upload"
-            @click="onPreview"
-          >
-            Preview
-          </v-btn>
-  
-          <v-btn
-            type="submit"
-            :disabled="!form"
-            :loading="isLoading"
-            block
-            color="success"
-            size="large"
-            prepend-icon="mdi-upload"
-          >
-            Upload
-          </v-btn>
-
-        <v-text-field
-          v-model.trim="formData.radius"
-          :readonly="isLoading"
-          :clearable="!isLoading"
-          :rules="rules['radius']"
-          placeholder="Enter radius"
-          class="mb-2"
-          variant="outlined"
-          density="compact"
-          label="Radius"
+          icon="mdi-close"
+          @click="$emit('close')"
+          position="absolute top-0 right-0"
+          variant="text"
         />
+        <h1>Transform</h1>
+        <v-card class="pa-4">
+          <!-- <v-btn v-model="usePreview" @click="usePreview = !usePreview" /> -->
 
-        <v-text-field
-          v-model.trim="formData.angle"
-          :readonly="isLoading"
-          :clearable="!isLoading"
-          :rules="rules['angle']"
-          placeholder="Enter angle"
-          class="mb-2"
-          variant="outlined"
-          density="compact"
-          label="Angle"
-        />
+          <v-row>
+            <v-col cols="auto">
+              <v-img
+                v-if="usePreview"
+                :src="imageUrl"
+                width="300px"
+                height="150px"
+                class="mx-auto my-4"
+                lazy-src="https://picsum.photos/id/11/10/6"
+              >
+                <template v-slot:placeholder>
+                  <div
+                    class="d-flex align-center justify-center fill-height"
+                  ></div>
+                </template>
+              </v-img>
+            </v-col>
+            <v-col cols="auto">
+              <v-form v-model="form" @submit.prevent="onSubmit">
+                <v-row>
+                  <v-col cols="4">
+                    <!-- :items="['auto', 'auto_pad','fill','fill_pad','fit','imagga_crop']" -->
+                    <v-text-field
+                      v-model.trim="formData.crop"
+                      :readonly="isLoading"
+                      :clearable="!isLoading"
+                      :rules="rules['crop']"
+                      placeholder="Enter crop"
+                      class="mb-2"
+                      variant="outlined"
+                      density="compact"
+                      label="Crop"
+                    />
+                    <v-text-field
+                      v-model.trim="formData.radius"
+                      :readonly="isLoading"
+                      :clearable="!isLoading"
+                      :rules="rules['radius']"
+                      placeholder="Enter radius"
+                      class="mb-2"
+                      variant="outlined"
+                      density="compact"
+                      label="Radius"
+                    />
+                    <v-text-field
+                      v-model.trim="formData.angle"
+                      :readonly="isLoading"
+                      :clearable="!isLoading"
+                      :rules="rules['angle']"
+                      placeholder="Enter angle"
+                      class="mb-2"
+                      variant="outlined"
+                      density="compact"
+                      label="Angle"
+                    />
+                  </v-col>
+                  <v-col cols="4">
+                    <v-text-field
+                      v-model.trim="formData.background"
+                      :readonly="isLoading"
+                      :clearable="!isLoading"
+                      :rules="rules['background']"
+                      placeholder="Enter background"
+                      class="mb-2"
+                      variant="outlined"
+                      density="compact"
+                      label="Background"
+                    />
+                    <v-text-field
+                      v-model.trim="formData.width"
+                      :readonly="isLoading"
+                      :clearable="!isLoading"
+                      :rules="rules['width']"
+                      placeholder="Enter width"
+                      class="mb-2"
+                      variant="outlined"
+                      density="compact"
+                      label="Width"
+                    />
+                    <v-text-field
+                      v-model.trim="formData.height"
+                      :readonly="isLoading"
+                      :clearable="!isLoading"
+                      :rules="rules['height']"
+                      placeholder="Enter height"
+                      class="mb-2"
+                      variant="outlined"
+                      density="compact"
+                      label="Height"
+                    />
+                  </v-col>
+                  <v-col cols="5">
+                    <v-text-field
+                      v-model.trim="formData.quality"
+                      :readonly="isLoading"
+                      :clearable="!isLoading"
+                      :rules="rules['quality']"
+                      placeholder="Enter quality"
+                      class="mb-2"
+                      variant="outlined"
+                      density="compact"
+                      label="Quality"
+                    />
 
-        <v-text-field
-          v-model.trim="formData.aspect_ratio"
-          :readonly="isLoading"
-          :clearable="!isLoading"
-          :rules="rules['aspect_ratio']"
-          placeholder="Enter aspect ratio"
-          class="mb-2"
-          variant="outlined"
-          density="compact"
-          label="Aspect ratio"
-        />
+                    <v-text-field
+                      v-model.trim="formData.opacity"
+                      :readonly="isLoading"
+                      :clearable="!isLoading"
+                      :rules="rules['opacity']"
+                      placeholder="Enter opacity"
+                      class="mb-2"
+                      variant="outlined"
+                      density="compact"
+                      label="Opacity"
+                    />
+                    <v-text-field
+                      v-model.trim="formData.zoom"
+                      :readonly="isLoading"
+                      :clearable="!isLoading"
+                      :rules="rules['zoom']"
+                      placeholder="Enter zoom"
+                      class="mb-2"
+                      variant="outlined"
+                      density="compact"
+                      label="Zoom"
+                    />
+                  </v-col>
+                  <v-col cols="6">
+                    <v-text-field
+                      v-model.trim="formData.border"
+                      :readonly="isLoading"
+                      :clearable="!isLoading"
+                      :rules="rules['border']"
+                      placeholder="Enter border"
+                      class="mb-2"
+                      variant="outlined"
+                      density="compact"
+                      label="Border"
+                    />
 
-        <v-text-field
-          v-model.trim="formData.crop"
-          :readonly="isLoading"
-          :clearable="!isLoading"
-          :rules="rules['crop']"
-          placeholder="Enter crop"
-          class="mb-2"
-          variant="outlined"
-          density="compact"
-          label="Crop"
-        />
+                    <v-text-field
+                      v-model.trim="formData.transformation"
+                      :readonly="isLoading"
+                      :clearable="!isLoading"
+                      :rules="rules['transformation']"
+                      placeholder="Enter transformation"
+                      class="mb-2"
+                      variant="outlined"
+                      density="compact"
+                      label="Transformation"
+                    />
+                    <v-text-field
+                      v-model.trim="formData.gravity"
+                      :readonly="isLoading"
+                      :clearable="!isLoading"
+                      :rules="rules['gravity']"
+                      placeholder="Enter gravity"
+                      class="mb-2"
+                      variant="outlined"
+                      density="compact"
+                      label="Gravity"
+                    />
+                  </v-col>
+                </v-row>
+              </v-form>
+            </v-col>
+          </v-row>
+          <v-card-actions class="justify-center">
+            <v-btn
+              v-if="usePreview"
+              type="button"
+              :disabled="!form"
+              :loading="isLoading"
+              color="success"
+              size="large"
+              prepend-icon="mdi-eye"
+              @click="onPreview"
+            >
+              Preview
+            </v-btn>
+            <v-spacer></v-spacer>
+            <v-btn
+              type="submit"
+              :disabled="!form"
+              :loading="isLoading"
+              color="success"
+              size="large"
+              prepend-icon="mdi-upload"
+              @click="onSubmit"
+            >
+              Upload
+            </v-btn>
+          </v-card-actions>
 
-        <v-text-field
-          v-model.trim="formData.background"
-          :readonly="isLoading"
-          :clearable="!isLoading"
-          :rules="rules['background']"
-          placeholder="Enter background"
-          class="mb-2"
-          variant="outlined"
-          density="compact"
-          label="Background"
-        />
+          <!-- </v-card-item>
+      
+            <v-card-item> -->
 
-        <v-text-field
-          v-model.trim="formData.width"
-          :readonly="isLoading"
-          :clearable="!isLoading"
-          :rules="rules['width']"
-          placeholder="Enter width"
-          class="mb-2"
-          variant="outlined"
-          density="compact"
-          label="Width"
-        />
-
-        <v-text-field
-          v-model.trim="formData.height"
-          :readonly="isLoading"
-          :clearable="!isLoading"
-          :rules="rules['height']"
-          placeholder="Enter height"
-          class="mb-2"
-          variant="outlined"
-          density="compact"
-          label="Height"
-        />
-
-        <v-text-field
-          v-model.trim="formData.border"
-          :readonly="isLoading"
-          :clearable="!isLoading"
-          :rules="rules['border']"
-          placeholder="Enter border"
-          class="mb-2"
-          variant="outlined"
-          density="compact"
-          label="Border"
-        />
-
-        <v-text-field
-          v-model.trim="formData.gravity"
-          :readonly="isLoading"
-          :clearable="!isLoading"
-          :rules="rules['gravity']"
-          placeholder="Enter gravity"
-          class="mb-2"
-          variant="outlined"
-          density="compact"
-          label="Gravity"
-        />
-
-        <v-text-field
-          v-model.trim="formData.opacity"
-          :readonly="isLoading"
-          :clearable="!isLoading"
-          :rules="rules['opacity']"
-          placeholder="Enter opacity"
-          class="mb-2"
-          variant="outlined"
-          density="compact"
-          label="Opacity"
-        />
-
-        <v-text-field
-          v-model.trim="formData.quality"
-          :readonly="isLoading"
-          :clearable="!isLoading"
-          :rules="rules['quality']"
-          placeholder="Enter quality"
-          class="mb-2"
-          variant="outlined"
-          density="compact"
-          label="Quality"
-        />
-
-        <v-text-field
-          v-model.trim="formData.transformation"
-          :readonly="isLoading"
-          :clearable="!isLoading"
-          :rules="rules['transformation']"
-          placeholder="Enter transformation"
-          class="mb-2"
-          variant="outlined"
-          density="compact"
-          label="Transformation"
-        />
-
-        <v-text-field
-          v-model.trim="formData.zoom"
-          :readonly="isLoading"
-          :clearable="!isLoading"
-          :rules="rules['zoom']"
-          placeholder="Enter zoom"
-          class="mb-2"
-          
-          variant="outlined"
-          density="compact"
-          label="Zoom"
-        />
-
-      </v-form>
-     </v-card-item>
-    </v-card> 
+          <!-- </v-card-item> -->
+        </v-card>
+      </v-sheet>
     </v-responsive>
   </v-container>
 </template>
@@ -220,7 +242,6 @@ const emit = defineEmits(["close"]);
 
 const props = defineProps({
   photo_id: Number,
-//   isActive: Boolean,
 });
 
 const imageUrl = ref("");
@@ -244,6 +265,10 @@ const formData = ref({
 });
 
 const isLoading = ref(false);
+const usePreview = ref(true);
+
+const isError = ref(false);
+const error = ref({});
 
 const rules = {
   radius: [(v) => !!v || "Radius is required"],
@@ -261,22 +286,57 @@ const rules = {
   zoom: [(v) => !!v || "Zoom is required"],
 };
 
-const onPreview = async () => { 
-  createTransformedPhoto(props.photo_id, getTransformData()).then((data) => {
-    console.log("onPreview", data);
-    imageUrl.value = data;
-    // emit("close");
-   }).catch((e) => {
-    console.log(e);
-   })
+const onPreview = async () => {
+  createTransformedPhoto(props.photo_id, getTransformData())
+    .then((data) => {
+      console.log("onPreview", data);
+      imageUrl.value = data;
+    })
+    .catch((e) => {
+      isError.value = true;
+      error.value = {
+        type: "error",
+        title: "Error",
+        text:
+          e?.response?.data?.message || e?.response?.data?.detail || e.message,
+      };
+    });
 };
 
 const onSubmit = () => {
   console.log("onSubmit", imageUrl.value);
+  if (!usePreview.value) {
+    createTransformedPhoto(props.photo_id, getTransformData())
+      .then((data) => {
+        console.log("onPreview", data);
+        imageUrl.value = data;
+       
+      })
+      .catch((e) => {
+        isError.value = true;
+        error.value = {
+          type: "error",
+          title: "Error",
+          text:
+            e?.response?.data?.message ||
+            e?.response?.data?.detail ||
+            e.message,
+        };
+      });
+  }
   saveTransformedPhoto(props.photo_id, imageUrl.value).then((data) => {
-    console.log(data);
-    // imageUrl.value = data;
     emit("close");
+  }).catch((e) => {
+    console.log(e);
+    isError.value = true;
+    error.value = {
+      type: "error",
+      title: "Error",
+      text:
+        e?.response?.data?.message ||
+        e?.response?.data?.detail ||
+        e.message,
+    };
   });
 };
 

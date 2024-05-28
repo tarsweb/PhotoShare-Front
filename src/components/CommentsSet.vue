@@ -74,9 +74,14 @@ const isLoading = ref(false);
 
 const getDataComments = async () => {
   isLoading.value = true;
-  const getDataComments = await getComments(props.photo_id);
-  comments.value = getDataComments;
-  isLoading.value = false;
+  getComments(props.photo_id).then((data) => {
+    comments.value = data;
+  }).catch((e) => {
+    comments.value = [];
+  })
+  .finally(() => {
+    isLoading.value = false;
+  })
 };
 
 watchEffect(async () => {

@@ -2,8 +2,9 @@
   <v-container>
     <v-responsive class="align-center text-center fill-height">
       <h1>Transform</h1>
-      <v-card class="d-flex flex-column">
-        <v-card-item>
+      <v-card>
+        
+        <v-card-item class="d-flex flex-column">
           <v-img
             :src="imageUrl"
             width="50px"
@@ -15,10 +16,35 @@
               <div class="d-flex align-center justify-center fill-height"></div>
             </template>
           </v-img>
-        </v-card-item>
+        <!-- </v-card-item>
       
-    <v-card-item>
+    <v-card-item> -->
       <v-form v-model="form" @submit.prevent="onSubmit">
+        <v-btn
+            type="button"
+            :disabled="!form"
+            :loading="isLoading"
+            block
+            color="success"
+            size="large"
+            prepend-icon="mdi-upload"
+            @click="onPreview"
+          >
+            Preview
+          </v-btn>
+  
+          <v-btn
+            type="submit"
+            :disabled="!form"
+            :loading="isLoading"
+            block
+            color="success"
+            size="large"
+            prepend-icon="mdi-upload"
+          >
+            Upload
+          </v-btn>
+
         <v-text-field
           v-model.trim="formData.radius"
           :readonly="isLoading"
@@ -170,35 +196,12 @@
           :rules="rules['zoom']"
           placeholder="Enter zoom"
           class="mb-2"
+          
           variant="outlined"
           density="compact"
           label="Zoom"
         />
 
-        <v-btn
-          type="button"
-          :disabled="!form"
-          :loading="isLoading"
-          block
-          color="success"
-          size="large"
-          prepend-icon="mdi-upload"
-          @click="onPreview"
-        >
-          Preview
-        </v-btn>
-
-        <v-btn
-          type="submit"
-          :disabled="!form"
-          :loading="isLoading"
-          block
-          color="success"
-          size="large"
-          prepend-icon="mdi-upload"
-        >
-          Upload
-        </v-btn>
       </v-form>
      </v-card-item>
     </v-card> 
@@ -212,6 +215,13 @@ import {
   createTransformedPhoto,
   saveTransformedPhoto,
 } from "@/services/apiPhoto";
+
+const emit = defineEmits(["close"]);
+
+const props = defineProps({
+  photo_id: Number,
+//   isActive: Boolean,
+});
 
 const imageUrl = ref("");
 
@@ -251,8 +261,13 @@ const rules = {
   zoom: [(v) => !!v || "Zoom is required"],
 };
 
-const onPreview = () => {
-  console.log(formData.value);
+const onPreview = async () => {
+  createTransformedPhoto(props.photo_id, JSON.stringify(formData.value)).then((data) => {
+    imageUrl.value = data;
+    // emit("close");
+   }).catch((e) => {
+    console.log(e);
+   })
 };
 
 const onSubmit = () => {

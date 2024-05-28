@@ -1,3 +1,4 @@
+import { transformVNodeArgs } from "vue";
 import instance from "./auth";
 
 const prefix = "/photos";
@@ -26,12 +27,15 @@ async function createPhoto(dataContent) {
   return data;
 }
 
-async function createTransformedPhoto({photo_id, dataTransform}) {
-  const { data } = await instance.post(`${prefix}/trans/${photo_id}`, dataTransform);
+async function createTransformedPhoto(photo_id, settingsTransform) {
+  // console.log("createTransformedPhoto", photo_id, JSON.parse(settingsTransform), settingsTransform, {transformations : JSON.stringify(settingsTransform)});
+  console.log("createTransformedPhoto", settingsTransform);
+
+  const { data } = await instance.post(`${prefix}/trans/${photo_id}`, {transformations : settingsTransform});
   return data;
 }
 
-async function saveTransformedPhoto({photo_id, url}) {
+async function saveTransformedPhoto(photo_id, url) {
   const { data } = await instance.patch(`${prefix}/trans/save${photo_id}`, {url});
   return data;
 }

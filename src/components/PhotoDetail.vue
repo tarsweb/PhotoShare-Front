@@ -36,7 +36,7 @@
         </v-card-text>
       </v-card-item>
       <v-card-actions>
-        <v-dialog max-width="500">
+        <v-dialog max-width="500" style="">
           <template v-slot:activator="{ props: activatorProps }">
             <v-btn
               v-bind="activatorProps"
@@ -47,7 +47,7 @@
           </template>
 
           <template v-slot:default="{ isActive }">
-            <PhotoTransformForm :photo_id="photo?.id" :isActive="isActive" />
+            <PhotoTransformForm :photo_id="photo?.id" />
             <!-- <v-card title="Dialog">
               <v-card-text>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -92,10 +92,6 @@ const props = defineProps({
 });
 
 const photo = toRef(props, "photo");
-
-const comments = computed(() => {
-  return props?.photo?.comments;
-});
 
 const isLoading = ref(false);
 

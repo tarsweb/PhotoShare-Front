@@ -152,7 +152,7 @@ const imageUrl = ref(null);
 
 watchEffect( async () => {
   isLoading.value = true;
-  tags.value = await getTags();
+  // tags.value = await getTags();
   isLoading.value = false;
 });
 

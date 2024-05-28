@@ -76,8 +76,11 @@
                     </v-list-item>
                   </v-card-item>
                   <v-card-actions>
-                    <v-btn
+                    <!-- <v-btn
                       :to="{ name: 'UserProfile', params: { id: item.id } }"
+                      >Edit
+                    </v-btn> -->
+                    <v-btn
                       >Edit
                     </v-btn>
                     <v-spacer></v-spacer>
@@ -107,6 +110,7 @@
           </template>
         </v-data-iterator>
       </v-sheet>
+      <v-progress-circular v-else indeterminate :size="88" :width="9"></v-progress-circular>
     </v-responsive>
   </v-container>
 </template>

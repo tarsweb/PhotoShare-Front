@@ -3,6 +3,7 @@ import cookies from "vue-cookies";
 
 const instance = axios.create({
   baseURL: "http://localhost:8000/api"
+  // baseURL: "https://rest-api-kbuhantsev-ca83d110.koyeb.app/api",
 });
 
 const prefix = "/auth";
@@ -38,17 +39,19 @@ instance.interceptors.response.use(
 
       if (!refresh_token) {
         setToken();
-        setRefreshToken();
         return Promise.reject(error);
       }
 
-      try {
-        await refreshToken(refresh_token);
-        return instance(error.config);
-      } catch (error) {
-        return Promise.reject(error);
+      refreshToken(refresh_token).then(() => {
+          return instance(error.config);
+        }).catch (
+          (error) => {
+            setToken();
+            setRefreshToken();
+            return Promise.reject(error);
+          }
+        )
       }
-    }
 
     setToken();
     setRefreshToken();

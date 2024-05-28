@@ -88,7 +88,11 @@
       </v-card>
     </v-responsive>
   </v-container>
-  <v-overlay v-model="overlay" scrim="black">
+  <v-overlay
+    v-model="overlay"
+    scrim="black"
+    class="d-flex justify-center align-center"
+  >
     <resetPasswordForm @close="overlay = false" />
   </v-overlay>
 </template>

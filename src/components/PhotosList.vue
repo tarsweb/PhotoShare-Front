@@ -51,7 +51,7 @@
                     <v-card-text>
                       <div class="d-flex">
                         <v-rating
-                          :model-value="3"
+                          :model-value="item.raw.average_rating"
                           color="amber"
                           density="compact"
                           size="small"

@@ -107,6 +107,7 @@
           </template>
         </v-data-iterator>
       </v-sheet>
+      <v-progress-circular v-else indeterminate :size="88" :width="9"></v-progress-circular>
     </v-responsive>
   </v-container>
 </template>

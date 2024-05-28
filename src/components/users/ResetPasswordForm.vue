@@ -82,10 +82,8 @@ const onSubmit = async (event) => {
         : formData.value.new_password,
     })
       .then((response) => {
-        console.log("response", response);
         event.target.reset();
         emit("close");
-        // router.push({ name: "Home" });
       })
       .catch((e) => {
         // isError.value = true;

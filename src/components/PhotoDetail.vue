@@ -1,7 +1,5 @@
 <template>
-  <v-container class="fill-height">
-    <v-responsive class="align-center text-center fill-height">
-      <v-sheet v-if="!isLoading" class="align-center">
+     <v-sheet v-if="!isLoading" class="align-center">
         <v-card :title="photo?.title">
           <template v-slot:append>
             <v-tooltip location="bottom">
@@ -18,20 +16,19 @@
 
               <v-card-title>{{ photo?.owner?.username }}</v-card-title>
 
-              <!-- <span>{{ photo?.owner }}</span> -->
             </v-tooltip>
           </template>
-          <v-card-text v-if="photo.tags">
+          <v-card-text v-if="photo?.tags">
             <div class="px-4 mb-2">
-              <v-chip v-for="tag in photo.tags" :key="tag.id" class="mr-2">
+              <v-chip v-for="tag in photo?.tags" :key="tag.id" class="mr-2">
                 {{ tag.name }}
               </v-chip>
             </div>
           </v-card-text>
           <v-card-item>
             <v-img
-              :src="photo.secure_url"
-              :alt="photo.title"
+              :src="photo?.secure_url"
+              :alt="photo?.title"
               width="250px"
               height="300px"
             ></v-img>
@@ -39,32 +36,25 @@
               {{ photo?.description }}
             </v-card-text>
           </v-card-item>
-          <v-card-item>
-            <v-list-item v-for="comment in photo?.comments" :key="comment">
-              <v-list-item-title>{{ comment }}</v-list-item-title>
-            </v-list-item>
-          </v-card-item>
-
           <v-card-actions>
             <v-btn color="primary" variant="outlined"> Details </v-btn>
             <v-btn> Make transformation </v-btn>
           </v-card-actions>
         </v-card>
-
-        {{ photo }}
+        <CommentsSet :photo_id="photo?.id"/>
       </v-sheet>
-    </v-responsive>
-  </v-container>
+   
 </template>
 
 <script setup>
-import { ref, watchEffect } from "vue";
+import { computed, ref, toRef, watchEffect } from "vue";
 import useCurrentUser from "@/composables/useCurrentUser";
-import { getPhoto } from "@/services/apiPhoto";
+
+import CommentsSet from "./CommentsSet.vue";
 
 const { user } = useCurrentUser();
 
-defineProps({
+const props = defineProps({
   photo: {
     type: Object,
     required: true,
@@ -72,7 +62,18 @@ defineProps({
   // isLoading: Boolean
 });
 
-// const currentPhoto = ref(props.photo);
+const photo = toRef(props, "photo");
+
+const comments= computed(() => {
+  return props?.photo?.comments;
+});
 
 const isLoading = ref(false);
+
+// watchEffect(async () => {
+//   isLoading.value = true;
+//   comments.value = await getComments(photo.id);
+//   isLoading.value = false;
+// });
+
 </script>

@@ -42,13 +42,16 @@ instance.interceptors.response.use(
         return Promise.reject(error);
       }
 
-      try {
-        await refreshToken(refresh_token);
-        return instance(error.config);
-      } catch (error) {
-        return Promise.reject(error);
+      refreshToken(refresh_token).then(() => {
+          return instance(error.config);
+        }).catch (
+          (error) => {
+            setToken();
+            setRefreshToken();
+            return Promise.reject(error);
+          }
+        )
       }
-    }
 
     setToken();
     setRefreshToken();

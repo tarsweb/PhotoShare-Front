@@ -2,7 +2,6 @@
   <v-container class="fill-height">
     <v-responsive class="align-center text-center fill-height">
       <h1>Photos</h1>
-      
       <PhotosList :photos="photos" :isLoading="isLoading" />
       <teleport v-if="isAuth" to="#app">
         <v-fab
@@ -22,7 +21,8 @@
   <v-overlay
     v-model="overlay"
     scrim="black"
-    style="overflow-y: auto !important"
+    style="overflow-y: auto !important;"
+    class="d-flex justify-center align-center"
   >
     <NewPhotoForm @close="overlay = false" />
   </v-overlay>
@@ -50,10 +50,8 @@ const getDataPhotos = async () => {
 
 watchEffect(async () => {
   isLoading.value = true;
-
-  console.log("Home", overlay.value);
-
-  getDataPhotos();
+  
+  await getDataPhotos();
 
   isLoading.value = false;
 });

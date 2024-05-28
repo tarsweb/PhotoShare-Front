@@ -41,7 +41,7 @@
             <v-btn
               v-bind="activatorProps"
               color="surface-variant"
-              text="Open Dialog"
+              text="Make transformation"
               variant="flat"
             ></v-btn>
           </template>
@@ -66,7 +66,7 @@
           </template>
         </v-dialog>
         <!-- <v-btn color="primary" variant="outlined"> Details </v-btn> -->
-        <v-btn variant="outlined" color="green"> Make transformation </v-btn>
+        <!-- <v-btn variant="outlined" color="green"> Make transformation </v-btn> -->
       </v-card-actions>
     </v-card>
     <CommentsSet :photo_id="photo?.id" />

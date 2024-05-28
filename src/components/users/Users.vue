@@ -3,16 +3,6 @@
     <v-responsive class="align-center text-center fill-height">
       <h1>Users</h1>
       <v-sheet v-if="!isLoading" class="align-center">
-        <!-- <v-card v-for="user in users" :key="user.email" class="d-flex flex-column mx-auto my-12" :title="user.username">
-                    <v-card-subtitle>{{ user.email }}</v-card-subtitle>
-                    <v-card-text>{{ user.role }}</v-card-text>
-                    <v-card-text>{{ user.created_at }}</v-card-text>
-                    <v-card-text>{{ user.updated_at }}</v-card-text>
-                    <v-card-actions>
-                        <v-btn :to="{ name: 'UserProfile', params: { id: user.id } }">Edit</v-btn>
-                    </v-card-actions>
-                </v-card> -->
-
         <v-data-iterator :items="users" :items-per-page="6" class="mx-12">
           <template v-slot:default="{ items }">
             <v-row>

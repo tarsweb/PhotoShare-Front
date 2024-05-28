@@ -17,7 +17,7 @@
                 <span class="ms-4">{{ item.raw.user.username }}</span>
               </template>
               <template v-slot:append>
-                <v-chip color="primary">
+                <v-chip color="green">
                   {{ getDateFormat(item.raw.created_at) }}</v-chip
                 >
               </template>
@@ -100,4 +100,6 @@ const getCountRow = computed(() => {
 const handleSendComment = async () => {
   getDataComments();
 };
+
+
 </script>

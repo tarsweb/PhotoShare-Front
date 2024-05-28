@@ -37,11 +37,12 @@
             </v-card-text>
           </v-card-item>
           <v-card-actions>
-            <v-btn color="primary" variant="outlined"> Details </v-btn>
-            <v-btn> Make transformation </v-btn>
+            <!-- <v-btn color="primary" variant="outlined"> Details </v-btn> -->
+            <v-btn variant="outlined" color="green"> Make transformation </v-btn>
           </v-card-actions>
         </v-card>
         <CommentsSet :photo_id="photo?.id"/>
+        {{ photo }}
       </v-sheet>
    
 </template>

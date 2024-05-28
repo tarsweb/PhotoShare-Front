@@ -1,5 +1,5 @@
 <template variant="outlined">
-  <v-sheet v-if="!isLoading" class="align-center">
+  <v-sheet class="align-center">
     <v-snackbar
       v-model="isError"
       location="right top"
@@ -19,10 +19,9 @@
           v-model="form"
           variant="outlined"
           @submit.prevent="onSubmit"
-          density="comfortable"
         >
           <v-textarea
-            v-model="formData.comment"
+            v-model.trim="formData.comment"
             label="Comment"
             variant="outlined"
             placeholder="Enter comment"
@@ -39,8 +38,8 @@
               size="large"
               type="submit"
               prepend-icon="mdi-send"
-              >Send</v-btn
-            >
+              >Send
+          </v-btn>
           </div>
         </v-form>
   </v-sheet>
@@ -83,18 +82,16 @@ const onSubmit = async (event) => {
     .then((result) => {
       event.target.reset();
       emit("sendComment");
-      isLoading.value = false;
     })
     .catch((e) => {
       isError.value = true;
-      console.log(e);
       error.value = {
         type: "error",
         title: "Error",
         text:
           e?.response?.data?.message || e?.response?.data?.detail || e.message,
       };
-      console.log(error.value);
+      
     })
     .finally(() => {
       isLoading.value = false;

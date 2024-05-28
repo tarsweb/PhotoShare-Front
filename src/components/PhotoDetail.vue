@@ -37,19 +37,12 @@
         <v-img
           :src="photo?.secure_url"
           :alt="photo?.title"
-          width="250px"
+          width="300px"
           height="300px"
         ></v-img>
-        <v-card-text class="text-h5">
+        <v-card-text>
           {{ photo?.description }}
         </v-card-text>
-        <v-rating
-          v-if="isAuth"
-          v-model="raiting"
-          color="amber"
-          density="compact"
-          @update:model-value="onUpdateRaiting"
-        ></v-rating>
       </v-card-item>
       <v-card-actions>
         <v-dialog v-if="user?.id === photo?.owner?.id">
@@ -69,6 +62,14 @@
             />
           </template>
         </v-dialog>
+        <v-spacer></v-spacer>
+        <v-rating
+          v-if="isAuth"
+          v-model="raiting"
+          color="amber"
+          density="compact"
+          @update:model-value="onUpdateRaiting"
+        ></v-rating>
         <!-- <v-btn color="primary" variant="outlined"> Details </v-btn> -->
         <!-- <v-btn variant="outlined" color="green"> Make transformation </v-btn> -->
       </v-card-actions>

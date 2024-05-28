@@ -89,7 +89,25 @@ export default function useAuth() {
     }
   }
 
-  async function resetPassword() {}
+  async function resetPassword(data) {
+    isLoading.value = true;
+
+    try {
+      const result = await authResetPassword(data);
+      return result;
+    } catch (e) {
+      error.value = {
+        type: "error",
+        title: "Error",
+        text:
+          e?.response?.data?.message || e?.response?.data?.detail || e.message,
+      };
+
+      return Promise.reject(e);
+    } finally {
+      isLoading.value = false;
+    }
+  }
 
   return {
     isLoading,

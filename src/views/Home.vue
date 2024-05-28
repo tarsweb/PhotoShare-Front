@@ -3,7 +3,7 @@
     <v-responsive class="align-center text-center fill-height">
       <h1>Photos</h1>
       <PhotosList v-if="!isLoading" :photos="photos" :isLoading="isLoading" />
-      <v-progress-circular v-elseindeterminate :size="88" :width="9"></v-progress-circular>
+      <v-progress-circular v-else indeterminate :size="88" :width="9"></v-progress-circular>
       <teleport v-if="isAuth" to="#app">
         <v-fab
           extended

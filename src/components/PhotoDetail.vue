@@ -53,7 +53,7 @@
             ></v-btn>
           </template>
 
-          <template v-slot:default="{ isActive }">
+          <template v-slot:default="{ isActive }" style="overflow-y: auto !important;">
             <PhotoTransformForm :photo_id="photo?.id" />
             <!-- <v-card title="Dialog">
               <v-card-text>

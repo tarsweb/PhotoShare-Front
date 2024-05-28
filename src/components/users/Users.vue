@@ -76,8 +76,11 @@
                     </v-list-item>
                   </v-card-item>
                   <v-card-actions>
-                    <v-btn
+                    <!-- <v-btn
                       :to="{ name: 'UserProfile', params: { id: item.id } }"
+                      >Edit
+                    </v-btn> -->
+                    <v-btn
                       >Edit
                     </v-btn>
                     <v-spacer></v-spacer>

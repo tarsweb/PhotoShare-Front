@@ -1,12 +1,22 @@
 <template>
-    <PhotoDetail :photo="photo" :isLoading="isLoading" />
+  <v-container class="fill-height">
+    <v-responsive class="align-center text-center fill-height">
+      <PhotoDetail v-if="!isLoading" :photo="photo" @updateData="updateData" />
+      <v-skeleton-loader
+        v-else
+        class="mx-auto border"
+        max-height="auto"
+        type="card, avatar, article, actions"
+      ></v-skeleton-loader>
+    </v-responsive>
+  </v-container>
 </template>
 
 <script setup>
-import { ref, watchEffect } from "vue";
-import { useRoute } from 'vue-router';
+import { provide, ref, watchEffect } from "vue";
+import { useRoute } from "vue-router";
 import useCurrentUser from "@/composables/useCurrentUser";
-import { getPhotos } from "@/services/apiPhoto";
+import { getPhoto } from "@/services/apiPhoto";
 
 const { user } = useCurrentUser();
 
@@ -19,19 +29,31 @@ const id = route.params.photo_id;
 const isLoading = ref(false);
 
 const photo = ref(null);
+const transformations = ref([]);
+
+provide("transformations", transformations);
 
 const getDataPhoto = async (id) => {
-  const res = await getPhotos();
-  photo.value = res.data;
-  console.log(res.data);
+  isLoading.value = true;
+
+  getPhoto(id)
+    .then((imageData) => {
+      photo.value = imageData;
+      transformations.value = imageData.transformations;
+    })
+    .catch((e) => {
+      console.log(e);
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
+};
+
+const updateData = () => {
+  getDataPhoto(id);
 };
 
 watchEffect(async () => {
-  isLoading.value = true;
-
   getDataPhoto(id);
-
-  isLoading.value = false;
 });
-
 </script>

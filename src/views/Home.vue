@@ -2,7 +2,8 @@
   <v-container class="fill-height">
     <v-responsive class="align-center text-center fill-height">
       <h1>Photos</h1>
-      <PhotosList :photos="photos" :isLoading="isLoading" />
+      <PhotosList v-if="!isLoading" :photos="photos" :isLoading="isLoading" />
+      <v-progress-circular v-else indeterminate :size="88" :width="9"></v-progress-circular>
       <teleport v-if="isAuth" to="#app">
         <v-fab
           extended
@@ -11,17 +12,18 @@
           variant="tonal"
           color="success"
           app
-          style="position: sticky; bottom: 20px; right: 20px"
+          style="position: sticky; bottom: 20px; right: 20px;"
           @click="overlay = true"
         >
         </v-fab>
-      </teleport>
+    </teleport>
     </v-responsive>
   </v-container>
   <v-overlay
     v-model="overlay"
     scrim="black"
-    style="overflow-y: auto !important"
+    style="overflow-y: auto !important;"
+    class="d-flex justify-center align-center"
   >
     <NewPhotoForm @close="overlay = false" />
   </v-overlay>
@@ -49,10 +51,8 @@ const getDataPhotos = async () => {
 
 watchEffect(async () => {
   isLoading.value = true;
-
-  console.log("Home", overlay.value);
-
-  getDataPhotos();
+  
+  await getDataPhotos();
 
   isLoading.value = false;
 });

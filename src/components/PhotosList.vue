@@ -33,7 +33,7 @@
 
                     <v-card-text v-if="item.raw.tags.length">
                       <div class="px-4 mb-2">
-                        <v-chip v-for="tag in item.raw.tags" :key="tag.id">
+                        <v-chip v-for="tag in item.raw.tags" :key="tag.id" class="mr-2">
                           {{ tag.name }}
                         </v-chip>
                       </div>
@@ -51,7 +51,7 @@
                     <v-card-text>
                       <div class="d-flex">
                         <v-rating
-                          :model-value="3"
+                          :model-value="item.raw.average_rating"
                           color="amber"
                           density="compact"
                           size="small"
@@ -113,7 +113,7 @@
                           <p class="text-h4">{{ item.raw.description }}</p>
                         </v-card-text>
                       </v-card>
-                      <v-btn variant="outlined" >
+                      <v-btn variant="outlined" @click="openPhoto(item.raw.id)">
                         See more info</v-btn
                       >
                     </v-overlay>

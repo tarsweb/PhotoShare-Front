@@ -26,7 +26,7 @@
       <v-btn
         class="my-2"
         color="primary"
-        href="https://rest-api-kbuhantsev-ca83d110.koyeb.app/docs"
+        href="http://localhost:8000/docs"
         min-width="164"
         outlined
         target="_blank"

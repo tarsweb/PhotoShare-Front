@@ -14,6 +14,16 @@
       <v-btn
         class="my-2"
         color="primary"
+        href="https://rest-api-kbuhantsev-ca83d110.koyeb.app/docs"
+        min-width="164"
+        outlined
+        target="_blank"
+        >REST API Docs
+      </v-btn>
+      <div class="d-flex align-center justify-center">
+      <v-btn
+        class="my-2"
+        color="primary"
         href="https://github.com/kbuhantsev/PhotoShare"
         min-width="164"
         outlined
@@ -21,17 +31,8 @@
         >Get it on GitHub
       </v-btn>
 
-      <v-divider class="my-4"></v-divider>
 
-      <v-btn
-        class="my-2"
-        color="primary"
-        href="https://rest-api-kbuhantsev-ca83d110.koyeb.app/docs"
-        min-width="164"
-        outlined
-        target="_blank"
-        >REST API Docs
-      </v-btn>
+      </div>
 
       <!-- <v-divider class="my-4"></v-divider>
 

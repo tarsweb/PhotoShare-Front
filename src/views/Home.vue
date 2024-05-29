@@ -25,7 +25,7 @@
     style="overflow-y: auto !important;"
     class="d-flex justify-center align-center"
   >
-    <NewPhotoForm @close="overlay = false" />
+    <NewPhotoForm @close="overlay = false; getDataPhotos()" />
   </v-overlay>
 </template>
 

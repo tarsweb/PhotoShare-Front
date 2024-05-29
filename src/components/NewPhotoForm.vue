@@ -1,7 +1,7 @@
 <template>
   <v-container class="fill-height">
     <v-responsive class="align-center text-center fill-height">
-      <v-sheet v-if="!isLoading" class="align-center" width="500">
+      <v-sheet class="align-center" width="500">
         <v-btn
           icon="mdi-close"
           @click="$emit('close')"
@@ -150,11 +150,11 @@ const tags = ref([]);
 
 const imageUrl = ref(null);
 
-watchEffect( async () => {
-  isLoading.value = true;
-  // tags.value = await getTags();
-  isLoading.value = false;
-});
+// watchEffect( async () => {
+//   isLoading.value = true;
+//   // tags.value = await getTags();
+//   isLoading.value = false;
+// });
 
 const createImage = (file) => {
   const reader = new FileReader();

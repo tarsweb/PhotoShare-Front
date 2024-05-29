@@ -28,13 +28,11 @@ async function createPhoto(dataContent) {
 }
 
 async function createTransformedPhoto(photo_id, settingsTransform) {
-  console.log("createTransformedPhoto", photo_id, settingsTransform);
   const { data : {data} } = await instance.post(`${prefix}/trans/${photo_id}`, {transformations : settingsTransform});
   return data;
 }
 
 async function saveTransformedPhoto(photo_id, url) {
-  console.log("saveTransformedPhoto", photo_id, url, {url : url});
   const { data } = await instance.post(`${prefix}/trans/save/${photo_id}`, {url});
   return data;
 }

@@ -14,34 +14,30 @@
         <v-btn variant="text" @click="isError = false"> Close </v-btn>
       </template>
     </v-snackbar>
-    {{ title }}
-        <v-form
-          v-model="form"
-          variant="outlined"
-          @submit.prevent="onSubmit"
-        >
-          <v-textarea
-            v-model.trim="formData.comment"
-            label="Comment"
-            variant="outlined"
-            placeholder="Enter comment"
-            :disabled="isLoading"
-            :rules="rules['comment']"
-            rows="2"
-          ></v-textarea>
-          <div class="d-flex">
-            <v-spacer></v-spacer>
-            <v-btn
-              :disabled="!form"
-              :loading="isLoading"
-              color="success"
-              size="large"
-              type="submit"
-              prepend-icon="mdi-send"
-              >Send
-          </v-btn>
-          </div>
-        </v-form>
+    <v-card-title class="text-left">{{ title }}</v-card-title>
+    <v-form v-model="form" variant="outlined" @submit.prevent="onSubmit">
+      <v-textarea
+        v-model.trim="formData.comment"
+        label="Comment"
+        variant="outlined"
+        placeholder="Enter comment"
+        :disabled="isLoading"
+        :rules="rules['comment']"
+        rows="2"
+      ></v-textarea>
+      <div class="d-flex">
+        <v-spacer></v-spacer>
+        <v-btn
+          :disabled="!form"
+          :loading="isLoading"
+          color="success"
+          size="large"
+          type="submit"
+          prepend-icon="mdi-send"
+          >Send
+        </v-btn>
+      </div>
+    </v-form>
   </v-sheet>
 </template>
 
@@ -91,7 +87,6 @@ const onSubmit = async (event) => {
         text:
           e?.response?.data?.message || e?.response?.data?.detail || e.message,
       };
-      
     })
     .finally(() => {
       isLoading.value = false;

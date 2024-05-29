@@ -2,10 +2,10 @@
   <v-container class="fill-height">
     <v-responsive class="align-center text-center fill-height">
       <h1>Comments</h1>
-      <v-data-iterator :items="comments" :items-per-page="5">
+      <v-data-iterator v-if="!isLoading":items="comments" :items-per-page="5">
         <template v-slot:default="{ items }">
           <template v-for="item in items" :key="item.id">
-            <v-card variant="outlined" class="my-2" сolor="primary">
+            <v-card variant="outlined" class="my-2" style="border-color: green;" >
               <template v-slot:prepend>
                 <v-avatar size="32">
                   <v-img
@@ -45,7 +45,8 @@
           ></v-pagination>
         </template>
       </v-data-iterator>
-      <div>
+      <v-progress-circular v-else indeterminate :size="88" :width="9"></v-progress-circular>
+      <div v-if="!isLoading">
         <v-divider class="my-4"></v-divider>
         <CommentForm
           :title="'Add comment'"

@@ -1,8 +1,7 @@
 <template>
   <v-container class="fill-height">
     <v-responsive class="align-center text-center fill-height">
-      <h1>Users</h1>
-      <v-sheet v-if="!isLoading" class="align-center">
+      <v-sheet v-if="!isLoading" class="align-center my-12">
         <v-data-iterator :items="users" :items-per-page="6" class="mx-12">
           <template v-slot:default="{ items }">
             <v-row>
@@ -15,7 +14,6 @@
                 <v-card
                   lg="4"
                   :elevation="14"
-                  
                   :title="item.raw.username"
                   :prepend-avatar="item.raw.avatar"
                 >
@@ -23,20 +21,6 @@
                     <v-chip color="primary"> {{ item.raw.role }}</v-chip>
                   </template>
                   <v-card-item>
-                    <!-- <v-row no-gutters>
-                      </v-col>
-                      <v-col>
-                        <v-list-item>sadsas</v-list-item>
-                        <v-list-item>sadsas</v-list-item>
-                        <v-list-item>sadsas</v-list-item>
-                      </v-col>
-                      <v-col>
-                        <v-list-item>sadsas</v-list-item>
-                      </v-col>
-                    </v-row> -->
-                    <!-- <v-list color="transparent" density="compact">
-                      <v-list-item title= Email :prepend-icon="item.raw.avatar">{{ item.raw.email }}</v-list-item>
-                    </v-list> -->
                     <v-list-item prepend-icon="mdi-email" title="Email">
                       <v-list-item-title>{{
                         item.raw.email
@@ -70,8 +54,8 @@
                       :to="{ name: 'UserProfile', params: { id: item.id } }"
                       >Edit
                     </v-btn> -->
-                    <v-btn
-                      >Edit
+                    <v-btn prepend-icon="mdi-pencil" color="success">
+                      Edit
                     </v-btn>
                     <v-spacer></v-spacer>
                     <v-btn
@@ -100,7 +84,12 @@
           </template>
         </v-data-iterator>
       </v-sheet>
-      <v-progress-circular v-else indeterminate :size="88" :width="9"></v-progress-circular>
+      <v-progress-circular
+        v-else
+        indeterminate
+        :size="88"
+        :width="9"
+      ></v-progress-circular>
     </v-responsive>
   </v-container>
 </template>

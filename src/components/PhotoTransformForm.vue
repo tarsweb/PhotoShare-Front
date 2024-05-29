@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-responsive class="align-center text-center fill-height">
-      <v-sheet v-if="!isLoading" class="align-center rounded" width="100%">
+      <v-sheet class="align-center rounded" width="100%">
         <v-snackbar
           v-model="isError"
           location="right top"
@@ -166,7 +166,7 @@
                       label="Border"
                     />
 
-                    <v-text-field
+                    <!-- <v-text-field
                       v-model.trim="formData.transformation"
                       :readonly="isLoading"
                       :clearable="!isLoading"
@@ -176,7 +176,7 @@
                       variant="outlined"
                       density="compact"
                       label="Transformation"
-                    />
+                    /> -->
                     <v-text-field
                       v-model.trim="formData.gravity"
                       :readonly="isLoading"
@@ -198,7 +198,7 @@
               v-if="usePreview"
               type="button"
               :disabled="!form"
-              :loading="isLoading"
+              :loading="isLoadingPreview"
               color="success"
               size="large"
               prepend-icon="mdi-eye"
@@ -219,12 +219,6 @@
               Upload
             </v-btn>
           </v-card-actions>
-
-          <!-- </v-card-item>
-      
-            <v-card-item> -->
-
-          <!-- </v-card-item> -->
         </v-card>
       </v-sheet>
     </v-responsive>
@@ -238,7 +232,7 @@ import {
   saveTransformedPhoto,
 } from "@/services/apiPhoto";
 
-const emit = defineEmits(["close"]);
+const emit = defineEmits(["close", "addTransformation"]);
 
 const props = defineProps({
   photo_id: Number,
@@ -252,7 +246,7 @@ const formData = ref({
   radius: "20:80",
   angle: -20,
   aspect_ratio: "1.5",
-  crop: "fit",
+  crop: "fill",
   background: "red",
   width: 200,
   height: 200,
@@ -260,11 +254,12 @@ const formData = ref({
   gravity: "north",
   opacity: 30,
   quality: "80",
-  transformation: "vignette_angle",
+  // transformation: "vignette_angle",
   zoom: "1.2",
 });
 
 const isLoading = ref(false);
+const isLoadingPreview = ref(false);
 const usePreview = ref(true);
 
 const isError = ref(false);
@@ -282,14 +277,14 @@ const rules = {
   gravity: [(v) => !!v || "Gravity is required"],
   opacity: [(v) => !!v || "Opacity is required"],
   quality: [(v) => !!v || "Quality is required"],
-  transformation: [(v) => !!v || "Transformation is required"],
+  // transformation: [(v) => !!v || "Transformation is required"],
   zoom: [(v) => !!v || "Zoom is required"],
 };
 
 const onPreview = async () => {
+  isLoadingPreview.value = true;
   createTransformedPhoto(props.photo_id, getTransformData())
     .then((data) => {
-      console.log("onPreview", data);
       imageUrl.value = data;
     })
     .catch((e) => {
@@ -300,17 +295,18 @@ const onPreview = async () => {
         text:
           e?.response?.data?.message || e?.response?.data?.detail || e.message,
       };
+    }).finally(() => {
+      isLoadingPreview.value = false;
     });
 };
 
 const onSubmit = () => {
-  console.log("onSubmit", imageUrl.value);
+  isLoading.value = true;
   if (!usePreview.value) {
     createTransformedPhoto(props.photo_id, getTransformData())
       .then((data) => {
         console.log("onPreview", data);
         imageUrl.value = data;
-       
       })
       .catch((e) => {
         isError.value = true;
@@ -324,20 +320,23 @@ const onSubmit = () => {
         };
       });
   }
-  saveTransformedPhoto(props.photo_id, imageUrl.value).then((data) => {
-    emit("close");
-  }).catch((e) => {
-    console.log(e);
-    isError.value = true;
-    error.value = {
-      type: "error",
-      title: "Error",
-      text:
-        e?.response?.data?.message ||
-        e?.response?.data?.detail ||
-        e.message,
-    };
-  });
+  saveTransformedPhoto(props.photo_id, imageUrl.value)
+    .then((data) => {
+      isLoading.value = false
+      emit("addTransformation");
+    })
+    .catch((e) => {
+      console.log(e);
+      isError.value = true;
+      error.value = {
+        type: "error",
+        title: "Error",
+        text:
+          e?.response?.data?.message || e?.response?.data?.detail || e.message,
+      };
+    }).finally(() => {
+      isLoading.value = false;
+    });
 };
 
 const getTransformData = () => {

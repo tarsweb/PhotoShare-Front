@@ -48,8 +48,15 @@
           <v-col v-if="transformations?.length" cols="5" class="d-flex">
             <v-divider vertical class="mx-4"></v-divider>
             <v-sheet class="d-flex flex-column" width="100%">
-              <h3 class="text-center mb-2">Transformations `{{ transformations.length }}`</h3>
-              
+              <v-badge
+                color="green"
+                :content="transformations.length"
+                class="d-flex justify-center align-center my-6 mt-4"
+                inline
+              >
+                <h3 class="text-center">Transformations</h3>
+              </v-badge>
+
               <v-carousel
                 v-if="transformations?.length"
                 :show-arrows="transformations?.length > 1"
@@ -63,7 +70,6 @@
                   class="align-center text-center fill-height cursor-pointer"
                   height="150px"
                   position="relative"
-                  
                 >
                   <v-dialog>
                     <template v-slot:activator="{ props: activatorProps }">
@@ -130,7 +136,10 @@
             <PhotoTransformForm
               :photo_id="photo?.id"
               @close="isActive.value = false"
-              @addTransformation="isActive.value = false; handleUpdateData()"
+              @addTransformation="
+                isActive.value = false;
+                handleUpdateData();
+              "
             />
           </template>
         </v-dialog>
@@ -214,7 +223,7 @@ const onUpdateRaiting = async (value) => {
     });
 };
 
-const handleUpdateData =() => {
+const handleUpdateData = () => {
   console.log("handleUpdateData");
   emit("updateData");
 };

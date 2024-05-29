@@ -55,7 +55,7 @@ async function blockUser({ email, blocked }) {
   }
 }
 
-async function udatedAvatar(file) {
+async function updatedAvatar(file) {
   try {
     const dataForUpdate = new FormData();
     dataForUpdate.append("file", file);
@@ -81,6 +81,6 @@ export {
   getUserPhotos,
   getUserComments,
   blockUser,
-  udatedAvatar,
+  updatedAvatar,
   resetPassword,
 };

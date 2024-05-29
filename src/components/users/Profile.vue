@@ -18,7 +18,7 @@
               <v-select
                 v-model="userProfile.role"
                 label="Role"
-                :disabled="!isEdit"
+                :disabled="userProfile.role !== 'ADMIN'"
                 :items="[
                   'California',
                   'Colorado',
@@ -99,7 +99,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { udatedAvatar } from "@/services/apiUser";
+import { updatedAvatar } from "@/services/apiUser";
 import resetPasswordForm from "@/components/users/ResetPasswordForm.vue";
 
 const props = defineProps({
@@ -114,26 +114,15 @@ const userProfile = ref(props.user);
 
 const isEdit = ref(false);
 const newAvatar = ref(null);
-const newAvatarUrl = ref(null);
 
 const overlay = ref(false);
-
-const createImage = (file) => {
-  const reader = new FileReader();
-
-  reader.onload = (e) => {
-    newAvatarUrl.value = e.target.result;
-  };
-
-  reader.readAsDataURL(file);
-};
 
 const onFileChange = async (file) => {
   if (!file) {
     return;
   }
 
-  udatedAvatar(file).then((response) => {
+  updatedAvatar(file).then((response) => {
     userProfile.value = response;
   });
 };

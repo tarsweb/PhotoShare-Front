@@ -145,7 +145,7 @@
         </v-dialog>
         <v-spacer></v-spacer>
         <v-rating
-          v-if="isAuth"
+          v-if="isAuth && photo?.owner?.email !== user?.email"
           v-model="raiting"
           color="amber"
           density="compact"
